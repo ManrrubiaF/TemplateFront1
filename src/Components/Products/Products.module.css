@@ -1,0 +1,102 @@
+.divMayor {
+    display: contents;
+    height: 100vh;
+    justify-content: center;
+    align-content: center;
+    padding: 0.1rem;
+}
+
+.carrouselContainer{
+    color: white;
+    display: flex;
+    justify-self: center;
+    margin: 2rem;
+    max-width: fit-content;
+    max-height: fit-content;
+}
+
+.containerProducts {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    grid-template-rows: repeat(3, auto); 
+    gap: 1rem; 
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+}
+
+.productsWithOutCart{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    grid-template-rows: repeat(4, auto); 
+    gap: 1rem; 
+    margin-left: 1rem;
+    margin-right: 5rem;
+    margin-bottom: 1rem;
+}
+
+
+.oneProduct {
+    display: grid;
+    grid-template-columns: repeat(1, 0.2fr);
+    margin-top: 2rem;
+    height: 15rem;
+    width: 15rem;
+    background-color: white;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 25px 25px 25px 25px;
+    padding: 1rem;
+    transition: box-shadow 0.3s ease;
+
+}
+.oneProduct:hover {
+    box-shadow: 0px 5px 9px rgb(240, 228, 228, 2); /* Aplicar sombra al poner el mouse encima */
+}
+
+.imageContainer{
+    display: flex;
+    justify-content: center;
+    width: 15rem;
+    height: 10rem;
+    overflow: hidden;
+}
+
+.Showimg {
+    justify-self: center;
+    object-fit: cover;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.cartInclude{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.cartNoInclude {
+    display: flexbox;
+}
+
+.filterDiv{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+}
+
+.filterDiv select{
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.filterDiv button{
+    margin-right: 1rem;
+    margin-left: 1rem;
+    cursor: pointer;
+
+}
+
+.filterDiv button:hover {
+    background-color: green;
+    color: white;
+    box-shadow: 1px 1px 1px 1px rgb(0,0,0,2);
+}

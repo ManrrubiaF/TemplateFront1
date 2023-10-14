@@ -1,0 +1,37 @@
+.divMayor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.buttonContainer{
+    display: flex;
+    width: fit-content;
+    height: fit-content;
+    background-color: rgb(0, 0 ,0 , 0.5);
+}
+
+.optionsContainer{
+    margin-left: 2rem;
+    margin-right: 2rem;
+    display: flex;
+    height: fit-content;
+    width: fit-content;
+    padding: 1rem;
+}
+
+.optionsContainer button{
+    background-color: white;
+    border-radius: 15px 15px 15px 15px;
+    width: 6rem;
+    height: 2rem;
+    cursor:pointer;   
+}
+.optionsContainer button:hover{
+    box-shadow: 2px 2px 2px 2px rgb(255,255,255, 2);
+    background-color: black;
+    color: white;
+}
+

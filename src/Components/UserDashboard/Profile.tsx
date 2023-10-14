@@ -3,6 +3,7 @@ import axios from "axios";
 import toast, { Toaster } from 'react-hot-toast'
 import { resetUser, setUser } from "../../Redux/Slice/userSlice";
 import { useEffect, useState } from "react";
+import { setIsEditing } from "../../Redux/Slice/userSlice";
 import Styles from './Profile.module.css'
 
 const BACK_URL = process.env.REACT_APP_BACK_URL;
@@ -19,21 +20,22 @@ interface UserData {
 
 
 export default function Profile() {
-    const [isEditing, setEditing] = useState(false)
-    const userData = useAppSelector((state) => state.user) as UserData || null;
+    const isEditing = useAppSelector((state) => state.user.Editing.isEditing);
+    const userData = useAppSelector((state) => state.user.User) as UserData || null;
     const dispatch = useAppDispatch()
     const [newData, setNewData] = useState<UserData>(userData)
     const [buttonDisabled, setButtonDisabled] = useState(true)
     const token: string | null = sessionStorage.getItem('token');
-    const [showConfirmDialog, setConfirmDialog ] = useState(false)
-
-    function deleteCookie() {
-        document.cookie = token + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    }
+    const [showConfirmDialog, setConfirmDialog] = useState(false)
 
     useEffect(() => {
         setNewData(userData)
     }, [userData])
+
+    useEffect(() => {
+        const result = deepEqual();
+        setButtonDisabled(!result);
+    }, [newData, userData]);
 
     const handleDelete = async () => {
         try {
@@ -43,10 +45,9 @@ export default function Profile() {
                 }
             })
             sessionStorage.removeItem('token')
-            deleteCookie();
             dispatch(resetUser())
-            setConfirmDialog(false)
             toast.success(response.data)
+            setConfirmDialog(false)            
         } catch (error: any) {
             toast.error(error.message)
         }
@@ -55,14 +56,22 @@ export default function Profile() {
     const deepEqual = () => {
         const keys = Object.keys(newData);
 
-        for (const key of keys) {
+        let isDifferent = false;
+        let i = 0;
+
+        while (!isDifferent && i < keys.length) {
+            const key = keys[i];
+
             if (newData[key] !== userData[key]) {
-                setButtonDisabled(false);
-            } else {
-                setButtonDisabled(true);
+                isDifferent = true;
             }
+
+            i++;
         }
+
+        return isDifferent;
     }
+
 
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -71,43 +80,43 @@ export default function Profile() {
             ...newData,
             [name]: value
         }))
-
-        deepEqual();
-
-    }
-
-    const handleCheckboxChange = () => {
-        setEditing(!isEditing);
     }
 
     const handleUpdate = async () => {
         try {
-            const response = await axios.put(`${BACK_URL}/user/update`, {
+            const response = await axios.put(`${BACK_URL}/user/update`, newData, {
                 headers: {
                     authorization: `Bearer ${token}`
                 },
-                newData
+
             })
             dispatch(setUser(response.data))
-
+            setNewData(userData)
             toast.success('Data Updated');
+            setButtonDisabled(true)
         } catch (error: any) {
             toast.error(error.message)
         }
     }
 
+    const handleChangeBox = () => {
+        dispatch(setIsEditing(!isEditing))
+    }
+
     return (
         <div className={Styles.divMayor}>
             <Toaster />
-            <label className={Styles.checkbox}>
+            <div>
+                <label className={Styles.checkbox}>
+                    Edit
+                </label>
                 <input
                     type='checkbox'
                     name='edit'
                     checked={isEditing}
-                    onChange={handleCheckboxChange}
+                    onChange={handleChangeBox}
                 />
-                Edit
-            </label>
+            </div>
             <div className={Styles.dataContainer}>
                 <span>Name</span>
                 <input type="text" name='name' value={newData.name} readOnly={!isEditing} onChange={handleChange}></input>
@@ -125,16 +134,18 @@ export default function Profile() {
                 <input type="number" name='phone' value={newData.phone} readOnly={!isEditing} onChange={handleChange}></input>
             </div>
             <div className={Styles.buttonsContainer}>
-                <button disabled={buttonDisabled} onClick={handleUpdate}> Save Changes </button>
-                <button onClick={() => setConfirmDialog(!showConfirmDialog)}>Delete Account</button>
+                <div>
+                    <button disabled={buttonDisabled} onClick={handleUpdate} className={Styles.buttonUpdate}> Save Changes </button>
+                    <button onClick={() => setConfirmDialog(!showConfirmDialog)} className={Styles.buttonDelete}>Delete Account</button>
+                </div>
                 {showConfirmDialog && (
                     <div className={Styles.divConfirmDialog}>
                         <h3>Do you want delete your account?</h3>
                         <div className={Styles.divConfirmButtons}>
-                            <button onClick={handleDelete}>Yes</button>
-                            <button onClick={()=> setConfirmDialog(!showConfirmDialog)}>No</button>
+                            <button onClick={handleDelete} className={Styles.buttonYes}>Yes</button>
+                            <button onClick={() => setConfirmDialog(!showConfirmDialog) } className={Styles.buttonNo}>No</button>
                         </div>
-                        
+
                     </div>
                 )}
             </div>

@@ -1,0 +1,74 @@
+.divMayor{
+    display: flex;
+    justify-content: center;
+    height: 80vh;
+}
+
+.form{
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+    align-self: center;
+    background-color: white;
+    height: 20rem;
+    width: 50rem;
+    padding: 1.5rem;
+}
+.divLabel{
+    margin:0.5rem;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+}
+
+.inputPass{
+    display: grid;
+    grid-template-columns: repeat(2, 0.2fr);
+    margin: 0;
+}
+
+.inputPass input{
+    height: 1.5rem;
+    width: 15rem;
+   
+}
+
+
+.form h2{
+    color: black;
+    margin-bottom: 1.5rem;
+    justify-self: center;
+    text-align: center;
+}
+
+
+.divMayor 
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button
+{
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.error{
+    color: red;
+    margin-left: 1rem;
+}
+
+.form button{
+    width: 5rem;
+    height: 3rem;
+    cursor: pointer;
+    border: 1px solid black;
+    border-radius: 25px 25px 25px 25px;
+    background-color: Black;
+    color: white;
+    justify-self: center;
+}
+.form button:hover{
+    width: 5rem;
+    height: 3rem;
+    justify-self: center;
+    background-color: green;
+    color: white;
+    box-shadow: 5px 5px 5px 5px rgb(0, 0 , 0 , 2);
+}
+

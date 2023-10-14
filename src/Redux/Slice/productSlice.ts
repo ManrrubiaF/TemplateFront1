@@ -5,6 +5,7 @@ type Product = {
     name:string
     price: string;
     description: string;
+    category:string;
     active: boolean;
     details: Detail[];
 };

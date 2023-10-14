@@ -28,7 +28,7 @@ const dataSlice = createSlice({
     initialState,
     reducers: {
         setData: (state, action: PayloadAction<Data>) => {
-            return action.payload;
+            return action.payload
         }
     }
 });

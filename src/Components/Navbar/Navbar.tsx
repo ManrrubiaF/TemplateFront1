@@ -2,22 +2,24 @@ import Styles from './Navbar.module.css'
 import React, { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../Redux/Hooks';
 import axios from 'axios';
-import { setUser } from '../../Redux/Slice/userSlice';
+import { resetUser, setUser } from '../../Redux/Slice/userSlice';
 import toast, { Toaster } from 'react-hot-toast';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { setStatus } from '../../Redux/Slice/CartSlice';
+import { resetCart, setStatus } from '../../Redux/Slice/CartSlice';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEye , faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { resetPagination } from '../../Redux/Slice/PaginationSlice';
+import { setIsLogged, resetUserMenu } from '../../Redux/Slice/UserMenu';
 
 
 export default function NavBar() {
-    const [isLogged, setIsLogged] = useState(false)
+    const isLogged = useAppSelector((state)=> state.userMenu.islogged)
     const [userMenuState, setUserMenuState] = useState(false)
     const [showPassword, setShowPassword] = useState(false);
     const token: string | null = sessionStorage.getItem('token');
     const [isDropdownVisible, setDropdownVisible] = useState(false);
     const [documentClickHandlerAdded, setDocumentClickHandlerAdded] = useState(false);
-    const userData = useAppSelector((state) => state.user);
+    const userData = useAppSelector((state) => state.user.User) || null;
     const statusCart = useAppSelector((state) => state.cart.cartStatus.status)
     const dispatch = useAppDispatch()
     const location = useLocation()
@@ -28,6 +30,21 @@ export default function NavBar() {
     });
     const BACK_URL = process.env.REACT_APP_BACK_URL;
 
+
+    useEffect(() => {
+        if (token && !isLogged) {
+            dispatch(setIsLogged(true));
+        }else{
+            dispatch(setIsLogged(false));
+        }
+    }, [])
+    useEffect(() => {
+        if (token && !isLogged) {
+            dispatch(setIsLogged(true));
+        }
+    }, [token])
+
+
     const handleLoginClick = () => {
         setDropdownVisible(!isDropdownVisible);
     };
@@ -37,7 +54,7 @@ export default function NavBar() {
     };
 
     const handleCartClick = () => {
-        dispatch(setStatus({ status: !statusCart }))
+        dispatch(setStatus(!statusCart))
     }
 
     useEffect(() => {
@@ -57,28 +74,16 @@ export default function NavBar() {
         };
     }, [documentClickHandlerAdded]);
 
-    useEffect(() => {
-        if (userData) {
-            setIsLogged(true);
-        }
-    }, [userData])
-
-    useEffect(() => {
-        if (userData) {
-            setIsLogged(true);
-        }
-    }, [])
 
     const handleLogin = async () => {
+        setDropdownVisible(false)
         try {
-            const response = await axios.post(`${BACK_URL}/user`)
-            dispatch(setUser(response.data))
-            if (response.headers['set-cookie']) {
-                sessionStorage.setItem('token', response.headers['set-cookie'][0]);
-            }
+            const response = await axios.post(`${BACK_URL}/user/login` , loginData)
+            dispatch(setUser(response.data.payload))
             toast.success('Welcome')
+            window.sessionStorage.setItem("token",JSON.stringify(response.data.token))            
         } catch (error: any) {
-            toast.error(error.message)
+            toast.error(error.response.data)
         }
     }
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,84 +93,116 @@ export default function NavBar() {
             [name]: value,
         });
     };
-    function deleteCookie() {
-        document.cookie = token + '=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    }
+    
     const handleMenuClick = () => {
         setUserMenuState(!userMenuState);
     }
 
 
     const handleLogOut = async () => {
+        setDropdownVisible(false)
+        setUserMenuState(false)
         try {
-            const response = await axios.post(`${BACK_URL}/user/logout`, { token });
-            sessionStorage.removeItem('token')
-            deleteCookie();
+            const response = await axios.post(`${BACK_URL}/user/logout`, {'token': token} );
+            window.sessionStorage.removeItem('token')
+            dispatch(resetUser());      
+            dispatch(resetUserMenu());
+            dispatch(resetCart());
+            dispatch(setIsLogged(false));
+            navigate('/')
             toast.success(response.data)
         } catch (error: any) {
             toast.error(error.message)
         }
     }
 
+    const handleProductsClick = () => {
+        dispatch(resetPagination());
+        navigate('/products')
+    }
+
+    const handleClickUser = () => {
+        navigate('/user');
+        setUserMenuState(false)
+    }
+
+    const handleClickDashboard = () => {
+        navigate('someplace');
+        setUserMenuState(false);
+    }
+
+    const handleSingUp = () => {
+        setDropdownVisible(false)
+        navigate('/register')
+    }
+
     return (
-        <div className={Styles.divMayor}>
+        <nav className={Styles.divMayor}>
             <div className={Styles.divImg}>
-                <img alt='Banner' src='' />
+                <img alt='Banner' src='https://res.cloudinary.com/drufv1rxz/image/upload/v1696482633/dfym6cgx7o3xtylsy6e2.jpg' />
             </div>
-            <div>
-                <button onClick={() => navigate('/')}> About Us</button>
-                <button onClick={() => navigate('/contact')}> Contact</button>
+            <div className={Styles.buttonContainer}>
+                <button className={Styles.defaultButton} onClick={() => navigate('/')}> About Us</button>
+                <button className={Styles.defaultButton} onClick={() => navigate('/contact')}> Contact</button>
+                <button className={Styles.defaultButton} onClick={handleProductsClick}> Products </button>
                 {isLogged ? (
                     <React.Fragment>
-                        <button onClick={handleMenuClick}> UserMenu</button>
-                        {userMenuState && (
-                            <div className={Styles.dropdown}>
-                                <ul>
-                                    <button onClick={() => navigate('/User')}> Profile </button>
-                                    {userData.access === 'Admin' && (
-                                        <button onClick={() => navigate('/someplace')}>Dashboard</button>
-                                    )}
-                                    <button onClick={handleLogOut}> LogOut </button>
-                                </ul>
-                            </div>
-                        )}
+                        <button className={Styles.buttonuser} onClick={handleMenuClick}> UserMenu</button>
+
                         {location.pathname === '/products' && (
                             <button onClick={handleCartClick}> Cart </button>
                         )}
                     </React.Fragment>
                 ) : (
                     <React.Fragment>
-                        <button onClick={handleLoginClick}> Login </button>
-                        {isDropdownVisible && (
-                            <div className={Styles.dropdown}>
-                                <span>Email: </span>
-                                <input
-                                    type="text"
-                                    name="email"
-                                    value={loginData.email}
-                                    onChange={handleInputChange}
-                                />
-                                <span>Contraseña: </span>
-                                <input
-                                    type={showPassword ? 'text' : 'password'}
-                                    name="pass"
-                                    value={loginData.pass}
-                                    onChange={handleInputChange}
-                                />
-                                {showPassword ? (
-                                    <FontAwesomeIcon icon={faEyeSlash} style={{ color: "#000000", }} onClick={togglePasswordVisibility} />
-                                ) : (
-                                    <FontAwesomeIcon icon={faEye} style={{ color: "#000000", }} onClick={togglePasswordVisibility} />
-                                )}
+                        <button className={Styles.buttonuser} onClick={handleLoginClick}> Login </button>
 
-                                <button onClick={handleLogin}> Singin  </button>
-                                <button onClick={() => navigate('/register')}> Singup </button>
-                                <Toaster />
-                            </div>
-                        )}
                     </React.Fragment>
                 )}
             </div>
-        </div>
+            {userMenuState && (
+                <div className={Styles.dropdownMenu}>
+                    <ul>
+                        <button className={Styles.buttonsMenu} onClick={handleClickUser}> Profile </button>
+                        {userData.access === 'Admin' && (
+                            <button onClick={handleClickDashboard} className={Styles.buttonsMenu}>Dashboard</button>
+                        )}
+                        <button onClick={handleLogOut} className={Styles.buttonsMenu}> LogOut </button>
+                    </ul>
+                </div>
+            )}
+            {isDropdownVisible && (
+                <div className={Styles.dropdown}>
+                    <div className={Styles.inputContainer}>
+                        <span>Email: </span>
+                        <input
+                            type="text"
+                            name="email"
+                            value={loginData.email}
+                            onChange={handleInputChange}
+                        />
+                        <span>Password: </span>
+                        <div className={Styles.password}>
+                        <input
+                            type={showPassword ? 'text' : 'password'}
+                            name="pass"
+                            value={loginData.pass}
+                            onChange={handleInputChange}
+                        />
+                        {showPassword ? (
+                            <FontAwesomeIcon icon={faEyeSlash} className={Styles.eyes} onClick={togglePasswordVisibility} />
+                        ) : (
+                            <FontAwesomeIcon icon={faEye} className={Styles.eyes} onClick={togglePasswordVisibility} />
+                        )}
+                        </div>
+                    </div>
+                    <div className={Styles.singupbuttons}>
+                        <button onClick={handleLogin}> Singin  </button>
+                        <button onClick={handleSingUp}> Singup </button>
+                    </div>
+                </div>
+            )}
+            <Toaster />
+        </nav>
     )
 }

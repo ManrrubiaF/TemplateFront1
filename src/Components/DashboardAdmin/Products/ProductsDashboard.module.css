@@ -1,0 +1,69 @@
+.divMayor{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    background-color: white;
+}
+.filterDiv{
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 1rem;
+    align-content: center;
+    justify-content: center;
+}
+
+.filterDiv select{
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background-color: black;
+    color: white;
+}
+.filterDiv button{
+    background-color: black;
+    color: white;
+    height: fit-content;
+    width: fit-content;
+    padding: 0.5rem;
+    cursor: pointer;
+}
+.filterDiv button:hover{
+    box-shadow: 3px 3px 3px 3px rgba(25, 25, 153, 1);
+}
+.titleContainer{
+    margin-top: 1rem;
+    margin-bottom:1rem;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    background-color: white;
+}
+.titleContainer > * {
+    border-right: 1px solid #000;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+    padding: 0.5rem; 
+}
+.titleContainer > :last-child {
+    border-right: none;
+    border-top: 1px solid black;
+    border-bottom: 1px solid black;
+}
+
+
+.dataProduct{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    margin-left: 2rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid black;
+    justify-items: center;
+}
+.divImg{
+    display: flex;    
+}
+
+.divImg img{
+    width: 120px;
+    height: 120px;
+}

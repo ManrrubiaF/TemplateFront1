@@ -1,0 +1,154 @@
+.divMayor{
+    display: contents;
+    justify-items: center;
+    align-items: center;
+    height: 100vh;
+    padding-bottom: 1rem;
+}
+
+.imagesContainer{
+    display: grid;
+    grid-template-columns: repeat(4,3fr);
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem ;
+    border: 1px dashed black;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.imageItem{
+    display: flex;
+    border: 0.5px solid black;
+    margin-left: 1rem;
+}
+
+.imageItem img{
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+}
+
+.imageLabel{
+    margin: 1rem;
+    font-size: 18px;
+    font-family: sans-serif;
+    font-style: italic;
+}
+
+.containerAllDetails{
+    display: flex;
+    flex-direction: column;
+    margin-left: 20%;
+    background-color: white;
+    width: 900px;
+    margin-top: 1rem;
+    align-items: center;
+    padding-bottom: 1rem;
+    border-radius: 15px 15px 15px 15px;
+}
+
+
+.containerAllDetails textarea{
+    width: 600px;
+    height: 200px;
+    resize: none;
+    overflow-y: scroll;
+}
+
+.divInputs {
+    display: flex;
+    margin-top: 1rem;
+   width: 300px;
+}
+
+.divInputs label {
+    margin-right: 1rem;
+    width: 50px;
+    left: 0;
+}
+.divInputs
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{
+    right: 0;
+    -webkit-appearance: none;
+}
+.divInputs input  {
+    
+    right: 0;
+}
+
+.uploadContainer{
+    display: flex;
+    
+}
+.iconUpload {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background-color: white;
+    color: gray;
+    border: 1px solid black;
+    height: 150px;
+    width: 150px;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconUpload span{
+    font-size: 40px;
+}
+
+.iconUpload span:last-child{
+    font-size: 12px;
+}
+
+
+.uploadContainer input {
+    display: none;
+}
+
+.backAndUpdate{
+    height: 30px;
+    width: 100px;
+    font-style: oblique;
+    font-weight: bold;
+    border-radius: 15px 15px 15px 15px;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    cursor: pointer;
+
+}
+.buttonDelete {
+    height: 40px;
+    width: 130px;
+    font-style: oblique;
+    font-weight: bold;
+    border-radius: 15px 15px 15px 15px;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    cursor: pointer;
+}
+.buttonDelete:hover{
+    background-color: red;
+    color: white;
+    font-size: 20px;
+    height: 50px;
+    width: 160px;
+    box-shadow: 3px 3px 3px 3px rgb(0,0,0,2);
+}
+.backAndUpdate:hover{
+    background-color: yellowgreen;
+    color: brown;
+    box-shadow: 3px 3px 3px 3px rgb(0,0,0,2);
+}
+
+.iconX{
+    background-color: black;
+    color: white;
+    cursor: pointer;
+    position: absolute;
+    margin-left: 1rem;
+}
+

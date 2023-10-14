@@ -1,0 +1,19 @@
+.divMayor{
+    display:inline-flex;
+    position: static;
+    align-content: center;
+    background-color: black;
+    width: 100%;
+    bottom: 0;
+}
+.socialContainer {
+    margin-left: 6rem;
+    margin-right: 6rem;
+}
+
+.socialContainer span {
+    color:white
+}
+.socialContainer a {
+    color: white;
+}

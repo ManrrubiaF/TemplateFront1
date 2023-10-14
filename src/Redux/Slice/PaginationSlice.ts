@@ -7,9 +7,9 @@ type Pagination = {
 }
 
 const initialState: Pagination = {
-    currentPage: 0,
+    currentPage: 1,
     elementsPerPage: 12,
-    totalPage: 0,
+    totalPage: 1,
 }
 
 const PaginationSlice = createSlice({
@@ -23,7 +23,7 @@ const PaginationSlice = createSlice({
             state.totalPage = action.payload
         },
         resetPagination: (state) => {
-            state.currentPage = initialState.currentPage,
+            state.currentPage = initialState.currentPage;
             state.totalPage = initialState.totalPage
         }
     }

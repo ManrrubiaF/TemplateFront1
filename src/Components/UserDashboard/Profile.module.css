@@ -1,0 +1,88 @@
+.divMayor{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 30rem;
+    height: 50vh;
+    padding: 2rem;
+    background-color: white;
+    margin-top: 1rem;
+    border-radius: 15px 15px 15px 15px;
+    border: solid brown 3px;
+    box-shadow: 6px 6px 6px 6px rgb(0,0,0, 4);
+}
+
+.checkbox input{
+    cursor: pointer;
+    width: 3rem;
+    height: 3rem;
+}
+
+.dataContainer{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0.5rem
+}
+
+.buttonsContainer {
+    display: flex;
+}
+
+.buttonUpdate{
+    margin: 1rem;
+    background-color: aqua;
+    border-radius: 25px 25px 25px 25px;
+    cursor: pointer;
+}
+.buttonUpdate:disabled {
+    background-color: lightgray;
+    cursor: not-allowed;
+}
+
+.buttonUpdate:not([disabled]):hover{
+    border-radius: 25px 25px 25px 25px;
+    background-color: blue;
+    color: white;
+    box-shadow: 3px 3px 3px 3px rgb(0,0,0, 2);
+}
+
+.buttonDelete{
+    margin:1rem;
+    background-color: red;
+    color: white;
+    border-radius: 25px 25px 25px 25px;
+    cursor: pointer;
+}
+
+.buttonDelete:hover{
+    box-shadow: 3px 3px 3px 3px rgb(0,0,0, 2);
+}
+
+.buttonYes{
+    background-color: red;
+    color: white;
+    border-radius: 25px 25px 25px 25px;
+    cursor: pointer;
+    margin:1rem;
+}
+
+.buttonNo{
+    background-color: green;
+    color: white;
+    border-radius: 25px 25px 25px 25px;
+    cursor: pointer;
+    margin:1rem;
+}
+
+.buttonYes:hover {
+    width: 30%;
+    height: 40%;
+    box-shadow: 3px 3px 3px 3px rgb(0,0,0, 2);
+}
+
+.buttonNo:hover {
+    width: 30%;
+    height: 40%;
+    box-shadow: 3px 3px 3px 3px rgb(0,0,0, 2);
+}
+

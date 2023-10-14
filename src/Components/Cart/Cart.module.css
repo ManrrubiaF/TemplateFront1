@@ -1,0 +1,77 @@
+.divMayor{
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 95%;
+    height: 100%;
+    background-color: orange;
+    top: 0;
+    right: 0;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.buttonClose {
+    cursor: pointer;
+    align-self: center;
+    background-color: white;
+    color: red;
+    margin-bottom: 1rem;
+}
+.buttonClose:hover{
+    box-shadow: 1px 1px 1px 1px rgb(0,0,0,2);
+}
+
+.cartBar{
+    display:grid;
+    grid-template-columns: repeat(3,1fr);
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 10px 10px 10px 10px;
+}
+
+.cartBar label{
+   margin-left: 0.5rem;
+   margin-right: 0.5rem;
+   padding: 0.5rem;
+   border-right: 1px solid #000;
+
+}
+.cartBar label:last-child {
+    border-right: none;
+}
+.ShowOne{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    justify-items: center;
+    align-items: center;
+    border-bottom:1px dashed black;
+    padding: 1rem;    
+}
+
+.ShowOneDiv{
+    height: fit-content;
+    width: fit-content;
+}
+
+.iconX{
+    grid-column: 4;
+    width: 1rem;
+    height: 1rem;
+    background-color: white;
+    color: red;
+    margin-right: 0.5rem;
+    box-shadow: 1px 1px 1px 1px rgb(0,0,0,2);
+}
+
+.imgAndStockDiv{
+    margin-left: 1rem;
+    display: flexbox;
+    width: 5rem;
+    height: 6rem;
+}
+
+.imgAndStockDiv img{
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+}

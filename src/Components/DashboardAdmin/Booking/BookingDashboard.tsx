@@ -1,11 +1,8 @@
 import axios from "axios"
-import Styles from './Booking.module.css'
+import Styles from './BookingDashboard.module.css'
 import { useState, useEffect } from "react";
-import { useAppSelector, useAppDispatch } from "../../Redux/Hooks";
-import toast, { Toaster } from "react-hot-toast";
-import { faX, faTrash } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { setProducts } from "../../Redux/Slice/productSlice";
+import { useAppSelector, useAppDispatch } from "../../../Redux/Hooks";
+import { setProducts } from "../../../Redux/Slice/productSlice";
 
 interface Bookings {
     id: number;
@@ -23,16 +20,9 @@ export default function Booking() {
     const [bookingData, setBookingData] = useState<Bookings[]>()
     const BACK_URL = process.env.REACT_APP_BACK_URL;
     const productData = useAppSelector((state) => state.products)
-    const [dataUpdated, setDataUpdated] = useState(false)
     const dispatch = useAppDispatch()
-    const [newData, setNewData] = useState({
-        id: 0,
-        status: ''
-    })
 
-    useEffect(()=>{
-        updateBookingData();
-    },[newData])
+
 
     useEffect(() => {
         if (productData.length < 1) {
@@ -40,13 +30,11 @@ export default function Booking() {
         }
         getBookingData();
     }, [])
-    useEffect(() => {
-        getBookingData()
-    }, [dataUpdated])
+
 
     const getBookingData = async () => {
         try {
-            const response = await axios.get(`${BACK_URL}/booking/mybooking`, {
+            const response = await axios.get(`${BACK_URL}/booking/allbooking`, {
                 headers: {
                     authorization: `Bearer ${token}`
                 }
@@ -59,37 +47,6 @@ export default function Booking() {
     }
 
 
-    const updateBookingData = async () => {
-        console.log(newData)
-        try {
-            const response = await axios.put(`${BACK_URL}/booking/update`, newData, {
-                headers: {
-                    authorization: `Bearer ${token}`
-                },
-
-            });
-            toast.success(response.data)
-            setDataUpdated(!dataUpdated)            
-        } catch (error: any) {
-            console.error(error.message)
-        }
-    }
-
-    const handleCancel = (booking: Bookings) => {
-        const shouldCancel = window.confirm("Do you really want cancel this product?");
-        if (shouldCancel) {
-            setNewData({ id: booking.id, status: 'cancel' });
-        }
-
-    }
-
-    const handleDelete = (booking: Bookings) => {
-        const shouldCancel = window.confirm("Do you really want delete this product?");
-        if (shouldCancel) {
-            setNewData({ id: booking.id, status: 'deleted' })
-        }
-    }
-
     const getProducts = async () => {
         try {
             const response = await axios.get(`${BACK_URL}/product/active`)
@@ -101,13 +58,11 @@ export default function Booking() {
 
     return (
         <div className={Styles.divMayor}>
-            <Toaster />
             <div className={Styles.divTitles}>
                 <label> Product </label>
                 <label> Color </label>
                 <label> Stock </label>
                 <label> Status </label>
-                <label> Cancel / Delete </label>
             </div>
             {bookingData ? (
                 bookingData?.map((booking) => (
@@ -130,12 +85,6 @@ export default function Booking() {
                                     </div>                          
                             )
                         }
-                        )}
-                        {booking.status !== 'cancel' && (
-                            <FontAwesomeIcon icon={faX} style={{ color: "#e74b08" }} onClick={() => handleCancel(booking)} className={Styles.iconX} />
-                        )}
-                        {booking.status === 'cancel' && (
-                            <FontAwesomeIcon icon={faTrash} style={{ color: "#496204" }} onClick={() => handleDelete(booking)} className={Styles.iconTrash} />
                         )}
                     </div>
                 ))

@@ -9,9 +9,9 @@ type Cart = {
 }
 
 type Detail = {
-    productId: number;
-    color: string;
-    stock: number;
+    productId: number | undefined;
+    color: string | undefined;
+    stock: number | undefined;
 }
 
 const initialState: {
@@ -30,14 +30,14 @@ const cartSlice = createSlice({
     name: 'CartStatus',
     initialState,
     reducers: {
-        setStatus: (state, action: PayloadAction<CartStatus>) =>{
-            state.cartStatus.status =  action.payload.status
+        setStatus: (state, action: PayloadAction<boolean>) =>{
+            state.cartStatus.status =  action.payload
         },
         setCart: (state, action: PayloadAction<Detail>) => {
             state.cart.details.push(action.payload);
         },
         removeProductFromCart: (state, action: PayloadAction<number>) => {
-            state.cart.details = state.cart.details.filter(detail => detail.productId !== action.payload);
+            state.cart.details.splice(action.payload, 1)
         },
         resetCart: (state) => {
             state.cart = initialState.cart; 

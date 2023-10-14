@@ -1,0 +1,133 @@
+.divMayor{
+    display: contents;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    height: 100vh;  
+    
+}
+
+.formDiv{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    width: 100%;  
+    border-radius: 25px 25px 25px 25px;
+}
+
+.form{
+    margin-left: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.inputContainers{
+    display: grid;
+    grid-template-columns: repeat((2, 1fr));
+    width: 750px;
+    background-color: lightblue;
+}
+.inputContainers label{
+    margin:0.5rem;
+    font-size: 18px;
+    justify-self: center;
+}
+
+.inputContainers
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button{
+    right: 0;
+    -webkit-appearance: none;
+}
+
+.inputContainers textarea{
+    width: 742px;
+    height: 200px;
+    resize: none;
+    overflow-y: scroll;
+}
+
+.imagesContainer{
+    display: grid;
+    grid-template-columns: repeat(4,3fr);
+    margin-bottom: 1rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem ;
+}
+
+.imagesContainer img{
+    cursor: pointer;
+    width: 150px;
+    height: 150px;
+}
+
+.imageLabel{
+    margin: 1rem;
+    font-size: 18px;
+    font-family: sans-serif;
+    font-style: italic;
+}
+
+.iconUpload {
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    background-color: white;
+    color: gray;
+    border: 1px solid black;
+    height: 150px;
+    width: 150px;
+    align-items: center;
+    justify-content: center;
+}
+
+.iconUpload span{
+    font-size: 40px;
+}
+
+.iconUpload span:last-child{
+    font-size: 12px;
+}
+
+.ImagesDiv{
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    border: 1px dashed black;
+    border-radius: 10px 10px 10px 10px;
+}
+.inputUpload{
+    display: none;
+}
+
+.SaveButton{
+    margin-top: 1rem;
+    margin-right: 2rem;
+    margin-left: 14rem;
+    width: 145px;
+    height: 55px;
+    border-radius: 15px 15px 15px 15px;
+    cursor: pointer;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+}
+.SaveButton:hover{
+    box-shadow: 2px 2px 2px 2px rgb(0,0,0,2);
+
+}
+.CreateButton{
+    margin-top: 1rem;
+    margin-left: 2rem;
+    width: 145px;
+    height: 55px;
+    border-radius: 15px 15px 15px 15px;
+    cursor: pointer;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-weight: bold;
+
+}
+.CreateButton:hover{
+    box-shadow: 2px 2px 2px 2px rgb(0,0,0,2);
+}

@@ -1,28 +1,41 @@
-import { useState } from 'react'
 import Profile from '../UserDashboard/Profile'
 import Styles from './User.module.css'
 import Booking from '../UserDashboard/Booking'
+import { useAppDispatch, useAppSelector } from '../../Redux/Hooks'
+import { setOption } from '../../Redux/Slice/UserMenu'
 
 
 export default function User() {
 
-    const [ optionSelected, setOptionSelected ] = useState<React.ReactNode>(Profile)
+    const optionSelected = useAppSelector((state) => state.userMenu.option)
+    const dispatch = useAppDispatch()    
+
+
+    const handleChange = (event: React.MouseEvent<HTMLButtonElement>) => {
+        const { name } = event.currentTarget
+        if(name === 'Profile'){
+            dispatch(setOption('Profile'))
+        }else{
+            dispatch(setOption('Booking'))
+        }
+    }
 
     return (
         <div className={Styles.divMayor}>
-            <div className={Styles.options}>
+            <div className={Styles.buttonContainer}>
                 <div className={Styles.optionsContainer}>
-                    <img />
-                    <button name='My profile' onClick={() => setOptionSelected(Profile)}> My Profile </button>
+                    <button name='Profile' onClick={handleChange}> My Profile </button>
                 </div>
                 <div className={Styles.optionsContainer}>
-                    <img />
-                    <button name='Booking' onClick={() => setOptionSelected(Booking)}> Booking </button>
+                    <button name='Booking' onClick={handleChange}> Booking </button>
                 </div>
             </div>
-            <div className={Styles.optionSelected}>
-                {optionSelected}
-            </div>
+            {optionSelected === 'Profile' ? (
+                <Profile />
+            ):(
+                <Booking />
+            )}
+
         </div>
     )
 }

@@ -8,6 +8,10 @@ export default function Pagination() {
     const dispatch = useAppDispatch();
     const products = useAppSelector((state) => state.products)
 
+    useEffect(() => {
+        setPagination();
+    }, [products])
+
     const setPagination = () => {
         const totalP = Math.ceil(products.length / elementsPerPage)
         if (totalP) {
@@ -22,46 +26,48 @@ export default function Pagination() {
         const previousPage = currentPage - 1
         dispatch(setCurrentPage(previousPage));
     }
-    const handlePageChange = (number: number) =>{
+    const handlePageChange = (number: number) => {
         dispatch(setCurrentPage(number))
     }
-
-    useEffect(() => {
-        setPagination();
-    }, [])
 
 
     return (
         <div className={Styles.divMayor}>
-            <div>
-                {currentPage > 1 && (
-                    <button onClick={handlePrevious}> Previous </button>
-                )}
+            <div className={Styles.buttons}>
                 <div>
+                    {currentPage > 1 && (
+                        <button onClick={handlePrevious}> Previous </button>
+                    )}
                     {Array.from({ length: totalPage }, (_, index) => {
                         const page = index + 1;
+                        const isCurrentPage = page === currentPage;
+
+                        const buttonClasses = isCurrentPage
+                            ? `${Styles.pageButton} ${Styles.currentPage}`
+                            : Styles.pageButton;
                         if (
-                            page === 1 || 
-                            page === totalPage || 
-                            (page >= currentPage - 2 && page <= currentPage + 2) 
+                            page === 1 ||
+                            page === totalPage ||
+                            (page >= currentPage - 2 && page <= currentPage + 2)
                         ) {
                             return (
-                                <button key={page} onClick={() => handlePageChange(page)}>
+                                <button key={page} onClick={() => handlePageChange(page)} className={buttonClasses}>
                                     {page}
                                 </button>
                             );
                         } else if (
-                            page === currentPage - 3 || 
-                            page === currentPage + 3 
+                            page === currentPage - 3 ||
+                            page === currentPage + 3
                         ) {
                             return <span key={page}>...</span>;
                         }
-                        return null; 
+                        return null;
                     })}
+                    {currentPage < totalPage && (
+                        <button onClick={handleNext}> Next </button>
+                    )}
                 </div>
-                {currentPage < totalPage && (
-                    <button onClick={handleNext}> Next </button>
-                )}
+
             </div>
         </div>
     )

@@ -1,0 +1,37 @@
+.divMayor{
+    display: contents;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonContainer{
+    margin-top: 1rem;
+    align-items: center;
+    display: flex;
+    height: fit-content;
+    width: 100%;
+    justify-content: center;
+}
+
+.optionsContainer{
+    align-content: center;
+    margin-left: 2rem;
+    margin-right: 2rem;
+    margin-bottom: 1rem;
+
+}
+.optionsContainer button{
+    background-color: black;
+    color:white;
+    cursor: pointer;
+    height: 3rem;
+    width: 6rem;
+    border-radius: 15px 15px 15px 15px;
+    box-shadow: 1px 1px 1px 1px rgb(255,255,255, 1);
+}
+
+.optionsContainer button:hover{
+    background-color: blue;
+    box-shadow: 3px 0 4px rgb(255,255,255, 4), -3px 0 4px rgb(255,255,255, 4);
+}

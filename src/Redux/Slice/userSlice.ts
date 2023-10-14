@@ -7,13 +7,14 @@ type User = {
     lastName: string | null;
     phone: number | null;
     Bookings: Booking[] | null;
-    access:string;
+    access: string | null;
 }
 
 type Booking = {
     id: number;
     userId: number
     details: Detail[];
+    status:string;
 }
 
 type Detail = {
@@ -22,15 +23,23 @@ type Detail = {
     stock: number;
 }
 
-const initialState: User = {
-    id: null,
-    email: '',
-    name: '',
-    lastName: '',
-    phone: null,
-    Bookings: null,
-    access: '',
+type Editing = {
+    isEditing: boolean;
+}
 
+const initialState: { User: User; Editing: Editing } = {
+    User: {
+        id: null,
+        email: null,
+        name: null,
+        lastName: null,
+        phone: null,
+        Bookings: null,
+        access: null,
+    },
+    Editing: {
+        isEditing: false,
+    }
 }
 
 const userSlice = createSlice({
@@ -38,13 +47,16 @@ const userSlice = createSlice({
     initialState,
     reducers: {
         setUser: (state, action: PayloadAction<User>) => {
-            return action.payload
+            state.User = action.payload;
+        },
+        setIsEditing: (state, action: PayloadAction<boolean>) => {
+            state.Editing.isEditing = action.payload  
         },
         resetUser: (state) => {
-            state = initialState;
+            state.User = initialState.User;
         },
     }
 })
 
-export const { setUser , resetUser} = userSlice.actions;
+export const { setUser, setIsEditing, resetUser } = userSlice.actions;
 export default userSlice.reducer;
