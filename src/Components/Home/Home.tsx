@@ -41,14 +41,14 @@ export default function Home() {
     return (
         <div className={Styles.divMayor}>
             <div className={Styles.divContainer}>
-                {dataAbout.photos.length > 0 && (
+                {dataAbout && dataAbout.photos.length > 0 && (
                     <div className={Styles.carousel}>
                         <button className={Styles.prevButton} onClick={prevImage}>{"<<"}</button>
                         <img className={Styles.Showimg} src={dataAbout.photos[currentImage]} alt="image" />
                         <button className={Styles.nextButton} onClick={nextImage}>{">>"}</button>
                     </div>
                 )}
-                {dataAbout.videos.length > 0 && (
+                {dataAbout && dataAbout.videos.length > 0 && (
                     <div className={Styles.videoContainer}>
                         <video controls>
                             <source src={dataAbout.videos[currentVideoIndex]} type="video/mp4" />
@@ -57,7 +57,7 @@ export default function Home() {
                     </div>
                 )}
                 <div className={Styles.AboutContainer}>
-                    <p> {dataAbout.aboutText}</p>
+                    <p> {dataAbout?.aboutText}</p>
                 </div>
             </div>
         </div>
